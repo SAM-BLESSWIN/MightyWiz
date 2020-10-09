@@ -2923,26 +2923,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895133507}
   m_CullTransparentMesh: 0
---- !u!1 &1905859331 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5891342949573853440, guid: 9cfe566df1178924781525e11a8b0d86,
-    type: 3}
-  m_PrefabInstance: {fileID: 4257349335318466737}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1905859332
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905859331}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.21
-  m_Height: 2.21
-  m_Direction: 1
-  m_Center: {x: -0.03, y: 0.9, z: 0}
 --- !u!1 &1956190174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,20 +3353,10 @@ PrefabInstance:
       propertyPath: WalkPoints.Array.data[2]
       value: 
       objectReference: {fileID: 789642341}
-    - target: {fileID: 1727561836374208200, guid: 9cfe566df1178924781525e11a8b0d86,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5891342949573853440, guid: 9cfe566df1178924781525e11a8b0d86,
         type: 3}
       propertyPath: m_Name
       value: Skeleton
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891342949573853440, guid: 9cfe566df1178924781525e11a8b0d86,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5893754248580224014, guid: 9cfe566df1178924781525e11a8b0d86,
         type: 3}

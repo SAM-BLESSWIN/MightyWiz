@@ -6,6 +6,12 @@ public class PlayerHealth : MonoBehaviour
 {
     public float health = 100f;
     private bool isshielded;
+    private Animator Anim;
+
+    private void Awake()
+    {
+        Anim = GetComponent<Animator>();
+    }
 
     public bool Shielded
     {
@@ -24,9 +30,14 @@ public class PlayerHealth : MonoBehaviour
         if(!isshielded)
         {
             health -= damage_amount;
-            if(health<=0)
+            print("Player Health"+health);
+            if (health<=0)
             {
-                print("Player DEAD");
+                Anim.SetBool("Death", true);
+                if(!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Death") || Anim.GetCurrentAnimatorStateInfo(0).normalizedTime>=0.95f)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }

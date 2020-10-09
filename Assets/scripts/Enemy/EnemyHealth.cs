@@ -5,6 +5,13 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     float health = 100f;
+    private Animator Anim;
+
+    private void Awake()
+    {
+        Anim = GetComponent<Animator>();
+    }
+
     public void TakeDamage(float damageamount)
     {
         health -= damageamount;
@@ -12,8 +19,11 @@ public class EnemyHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            print("DEAD");
-            Destroy(gameObject);
+            Anim.SetBool("Death", true);
+            if (!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Death") || Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
