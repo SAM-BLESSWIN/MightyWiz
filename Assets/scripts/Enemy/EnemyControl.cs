@@ -18,25 +18,87 @@ public class EnemyControl : MonoBehaviour
     private Vector3 NextDest;
     private NavMeshAgent NavAgent;
     private Animator Anim;
+    private GameObject Player;
 
 
     void Awake()
     {
-        PlayerTarget = GameObject.FindGameObjectWithTag("Player").transform;
+        Player = GameObject.FindGameObjectWithTag("Player");
         NavAgent = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
     }
 
     void Start()
     {
-        
+        if(Player!=null)
+        {
+            PlayerTarget = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     void Update()
     {
-        float Distance = Vector3.Distance(PlayerTarget.position, transform.position);
+        if (Player!=null)
+        {
+            float Distance = Vector3.Distance(PlayerTarget.position, transform.position);
+            if (Distance > RunDist)
+            {
+                if (NavAgent.remainingDistance <= 0.5f)   //gives distance between enemy and walkpoint
+                {
+                    NavAgent.isStopped = false;
+                    Anim.SetBool("Walk", true);
+                    Anim.SetBool("Run", false);
+                    Anim.SetInteger("Atk", 0);
 
-        if (Distance > RunDist)
+                    NextDest = WalkPoints[WalkIndex].position;
+                    NavAgent.SetDestination(NextDest);
+
+
+                    if (WalkIndex == WalkPoints.Length - 1)
+                    {
+                        WalkIndex = 0;
+                    }
+                    else
+                    {
+                        WalkIndex++;
+                    }
+                }
+            }
+            else if (Distance > AttackDist)
+            {
+                NavAgent.isStopped = false;
+                Anim.SetBool("Walk", false);
+                Anim.SetBool("Run", true);
+                Anim.SetInteger("Atk", 0);
+
+                NavAgent.SetDestination(PlayerTarget.position);
+
+            }
+            else
+            {
+                NavAgent.isStopped = true;
+                Anim.SetBool("Walk", false);
+                Anim.SetBool("Run", false);
+
+                Vector3 TargetPos = new Vector3(PlayerTarget.position.x, transform.position.y, PlayerTarget.position.z);
+                transform.rotation = Quaternion.Slerp(
+                                                transform.rotation,
+                                                Quaternion.LookRotation(TargetPos - transform.position),
+                                                5f * Time.deltaTime);
+                if (CurrentAttackTime >= AttackInterval)
+                {
+                    int AtkRange = Random.Range(1, 3);
+                    Anim.SetInteger("Atk", AtkRange);
+                    CurrentAttackTime = 0f;
+                }
+                else
+                {
+                    Anim.SetInteger("Atk", 0);
+                    CurrentAttackTime += Time.deltaTime;
+                }
+            }
+        }
+        else
         {
             if (NavAgent.remainingDistance <= 0.5f)   //gives distance between enemy and walkpoint
             {
@@ -47,7 +109,7 @@ public class EnemyControl : MonoBehaviour
 
                 NextDest = WalkPoints[WalkIndex].position;
                 NavAgent.SetDestination(NextDest);
-             
+
 
                 if (WalkIndex == WalkPoints.Length - 1)
                 {
@@ -57,39 +119,6 @@ public class EnemyControl : MonoBehaviour
                 {
                     WalkIndex++;
                 }
-            }
-        }
-        else if(Distance>AttackDist)
-        {
-            NavAgent.isStopped = false;
-            Anim.SetBool("Walk", false);
-            Anim.SetBool("Run", true);
-            Anim.SetInteger("Atk", 0);
-
-            NavAgent.SetDestination(PlayerTarget.position);
-            
-        }
-        else
-        {
-            NavAgent.isStopped = true;
-            Anim.SetBool("Walk", false);
-            Anim.SetBool("Run", false);
-
-            Vector3 TargetPos = new Vector3(PlayerTarget.position.x,transform.position.y,PlayerTarget.position.z);
-            transform.rotation = Quaternion.Slerp(
-                                            transform.rotation, 
-                                            Quaternion.LookRotation(TargetPos - transform.position), 
-                                            5f * Time.deltaTime);
-            if(CurrentAttackTime>=AttackInterval)
-            {
-                int AtkRange = Random.Range(1, 3);
-                Anim.SetInteger("Atk", AtkRange);
-                CurrentAttackTime = 0f;
-            }
-            else
-            {
-                Anim.SetInteger("Atk", 0);
-                CurrentAttackTime += Time.deltaTime;
             }
         }
     }

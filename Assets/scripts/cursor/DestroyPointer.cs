@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class DestroyPointer : MonoBehaviour
 {
-    private Transform player;
+    private GameObject player;
+    private Transform playertarget;
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+    private void Start()
+    {
+        if(player!=null)
+        {
+            playertarget= GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
     void Update()
     {
-       if(Vector3.Distance(player.position,transform.position)<=1.5f)
+        if(player!=null)
         {
-            Destroy(gameObject);
+            if (Vector3.Distance(playertarget.position, transform.position) <= 1.5f)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

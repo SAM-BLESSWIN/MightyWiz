@@ -21,15 +21,18 @@ public class EnemyAttack : MonoBehaviour
 
     void Update()
     {
-        if(FinishedAttack)
+        if(PlayerTarget)
         {
-           DealDamge(CheckIsattacking());
-        }
-        else
-        {
-            if (!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (FinishedAttack)
             {
-                FinishedAttack = true;
+                DealDamge(CheckIsattacking());
+            }
+            else
+            {
+                if (!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    FinishedAttack = true;
+                }
             }
         }
     }

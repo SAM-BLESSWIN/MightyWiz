@@ -29,14 +29,17 @@ public class cameramovement : MonoBehaviour
     }
     private void Update()
     {
-        //give intermediate float value b/w 2 position with time(used for zoom in effect)
-        current_height = Mathf.Lerp(transform.position.y, target_height, 0.9f * Time.deltaTime);
+        if(player)
+        {
+            //give intermediate float value b/w 2 position with time(used for zoom in effect)
+            current_height = Mathf.Lerp(transform.position.y, target_height, 0.9f * Time.deltaTime);
 
-        //target camera position calculation (i.e z denotes the dist b/w camera and player,x will be player x position )
-        Vector3 target_pos = player.position - (Vector3.forward* follow_distance); 
+            //target camera position calculation (i.e z denotes the dist b/w camera and player,x will be player x position )
+            Vector3 target_pos = player.position - (Vector3.forward * follow_distance);
 
-        target_pos.y = current_height; //make camera fixed at y(fixed height) only change along x and z
-        transform.position = target_pos;//assign values to camera position
-        transform.LookAt(player);//always make camera look at player
+            target_pos.y = current_height; //make camera fixed at y(fixed height) only change along x and z
+            transform.position = target_pos;//assign values to camera position
+            transform.LookAt(player);//always make camera look at player
+        }
     }
 }
