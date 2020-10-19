@@ -38,13 +38,7 @@ public class PlayerHealth : MonoBehaviour
             if (health<=0)
             {
                 Anim.SetBool("Death", true);
-                if(!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Death"))
-                {
-                    if(Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
-                    {
-                        Destroy(gameObject);
-                    }
-                }
+                Destroy(gameObject,3f);
             }
         }
     }

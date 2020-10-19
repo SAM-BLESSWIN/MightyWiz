@@ -8,6 +8,12 @@ public class mousepoint : MonoBehaviour
     public GameObject mousepointer;
     private GameObject instantmouse; //to store last insatntiate mousepointer
     private bool instant=false;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim =GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -15,24 +21,28 @@ public class mousepoint : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(ray,out hit))
+
+            if(!anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsName("Stand"))
             {
-                if(hit.collider is TerrainCollider)
+                if (Physics.Raycast(ray, out hit))
                 {
-                    Vector3 temp = hit.point;
-                    temp.y = 0.1f;
-                    if(!instant)             //used only for 1st click instantiation
+                    if (hit.collider is TerrainCollider)
                     {
-                        instantmouse=Instantiate(mousepointer, temp, Quaternion.identity) as GameObject;
-                        instant = true;
-                    }
-                    else                     //used for all the other instantiations
-                    {
-                        Destroy(instantmouse);     //destroy previous
-                        instantmouse = Instantiate(mousepointer, temp, Quaternion.identity) as GameObject;   //creates new
+                        Vector3 temp = hit.point;
+                        temp.y = 0.1f;
+                        if (!instant)             //used only for 1st click instantiation
+                        {
+                            instantmouse = Instantiate(mousepointer, temp, Quaternion.identity) as GameObject;
+                            instant = true;
+                        }
+                        else                     //used for all the other instantiations
+                        {
+                            Destroy(instantmouse);     //destroy previous
+                            instantmouse = Instantiate(mousepointer, temp, Quaternion.identity) as GameObject;   //creates new
+                        }
                     }
                 }
-            }
+            }  
         }
     }
 }

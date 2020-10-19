@@ -1,22 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    float health = 100f;
+    public float health = 100f;
     private Animator Anim;
-    private Image Health_img;
+    public Image Health_img;
+    private NavMeshAgent Navagent;
 
     private void Awake()
     {
         Anim = GetComponent<Animator>();
-
-        if(tag=="Enemy")
-        {
-            Health_img = GameObject.Find("HealthFG").GetComponent<Image>();
-        }
+        Navagent = GetComponent<NavMeshAgent>();
     }
 
     public void TakeDamage(float damageamount)
@@ -27,10 +25,8 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             Anim.SetBool("Death", true);
-            if (!Anim.IsInTransition(0) && Anim.GetCurrentAnimatorStateInfo(0).IsName("Death"))
-            {
-                Destroy(gameObject,2f);
-            }
+            Destroy(gameObject,3f);
+            Navagent.isStopped = true;
         }
     }
 }

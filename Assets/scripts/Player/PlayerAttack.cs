@@ -58,66 +58,77 @@ public class PlayerAttack : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[0] != 1 && canattack)
             {
                 fillimage[0] = 1;
                 anim.SetInteger("Atk", 1);
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();       
             }
          
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[1] != 1 && canattack)
             {
                 fillimage[1] = 1;
                 anim.SetInteger("Atk", 2);
+
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();
             }
 
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[2] != 1 && canattack)
             {
                 fillimage[2] = 1;
                 anim.SetInteger("Atk", 3);
+
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();
             }
 
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[3] != 1 && canattack)
             {
                 fillimage[3] = 1;
                 anim.SetInteger("Atk", 4);
+
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();
             }
 
         }
 
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[4] != 1 &&canattack)
             {
                 fillimage[4] = 1;
                 anim.SetInteger("Atk", 6);
+
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();
             }
 
         }
 
         else if (Input.GetMouseButton(1))
         {
-            move.Targetpos = transform.position;
             if (move.Finishedmove && fillimage[5] != 1 &&canattack)
             {
                 fillimage[5] = 1;
                 anim.SetInteger("Atk", 5);
+
+                move.Targetpos = transform.position;
+                RemovePointeratAttack();
             }
         }
         else
@@ -206,5 +217,14 @@ public class PlayerAttack : MonoBehaviour
             faded = true;
         }
         return faded;
+    }
+
+    private void RemovePointeratAttack()
+    {
+        GameObject Pointer = GameObject.FindGameObjectWithTag("Cursor");
+        if(Pointer)
+        {
+            Destroy(Pointer);
+        }
     }
 }
